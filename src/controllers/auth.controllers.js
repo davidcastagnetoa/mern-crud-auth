@@ -79,7 +79,18 @@ export const logout = (req, res) => {
 };
 
 // Rutas protegidas verificar si el usuario esta logueado o no
+// Perfil del usuario
+
 export const profile = async (req, res) => {
-  console.log(req.user);
+  const UserFound = await User.findById(req.user.id);
+
+  if (!UserFound) return res.status(400).json({ message: "User not found" });
+  return res.json({
+    id: UserFound._id,
+    username: UserFound.username,
+    email: UserFound.email,
+    createdAt: UserFound.createdAt,
+    updateAt: UserFound.updateAt,
+  });
   res.send("profile");
 };

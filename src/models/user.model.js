@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
         "Ingrese un correo electrónico válido",
       ],
     },
-  },
+  },  
   {
     timestamps: true,
   }
