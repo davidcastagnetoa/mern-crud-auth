@@ -97,12 +97,22 @@ export const profile = async (req, res) => {
   res.send("profile");
 };
 
-export const verify = async (req, res) => {
+export const verifyToken = async (req, res) => {
   const { token } = req.cookies;
+
   if (!token) return res.status(401).json({ message: "Unauthorized" });
-  jwt.verify(token, TOKEN_SECRET, (err, user) => {
+  // Verifica el token
+  jwt.verify(token, TOKEN_SECRET, async (err, user) => {
     if (err) return res.status(401).json({ message: "Unauthorized" });
-    // const userFound = await User.findById(user.id);
+
+    // Si el token es valido, envia la respuesta
+    const userFound = await User.findById(user.id);
     if (!userFound) return res.status(401).json({ message: "Unauthorized" });
+
+    return res.json({
+      id: userFound._id,
+      username: userFound.username,
+      email: userFound.email,
+    });
   });
 };
