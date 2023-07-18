@@ -1,6 +1,8 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jwt.js";
+import jwt from "jsonwebtoken";
+import { TOKEN_SECRET } from "../config.js";
 
 // Registrar nuevo usuario
 export const register = async (req, res) => {
@@ -81,7 +83,6 @@ export const logout = (req, res) => {
 
 // Rutas protegidas verificar si el usuario esta logueado o no
 // Perfil del usuario
-
 export const profile = async (req, res) => {
   const UserFound = await User.findById(req.user.id);
 
@@ -94,4 +95,14 @@ export const profile = async (req, res) => {
     updateAt: UserFound.updateAt,
   });
   res.send("profile");
+};
+
+export const verify = async (req, res) => {
+  const { token } = req.cookies;
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+  jwt.verify(token, TOKEN_SECRET, (err, user) => {
+    if (err) return res.status(401).json({ message: "Unauthorized" });
+    // const userFound = await User.findById(user.id);
+    if (!userFound) return res.status(401).json({ message: "Unauthorized" });
+  });
 };

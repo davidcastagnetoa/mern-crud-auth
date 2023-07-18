@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
   // consulta hacia el backend, comprobacion de cookie
   useEffect(() => {
     const cookies = Cookies.get();
+    console.log(cookies);
     if (cookies.token) console.log(cookies.token);
   }, []);
 
