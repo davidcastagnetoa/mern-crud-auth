@@ -16,8 +16,15 @@ export const loginRequest = async (user) => {
   return response;
 };
 
+// export const verifyTokenRequest = async (token) => {
+//   // const response = await axios.get(`${api}/auth/verifyToken`, token);
+//   const response = await axios.get(`/verify`, token);
+//   return response;
+// };
+
+// export const verifyTokenRequest = () => axios.get("/verify");
+
 export const verifyTokenRequest = async (token) => {
-  // const response = await axios.get(`${api}/auth/verifyToken`, token);
-  const response = await axios.get(`/verify`, token);
+  const response = await axios.get(`/verify`, { headers: { Authorization: `Bearer ${token}` } });
   return response;
 };

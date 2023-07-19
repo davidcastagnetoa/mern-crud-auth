@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const Authcontext = createContext();
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
   // consulta hacia el backend, comprobacion de cookie
   useEffect(() => {
-    const checkLogin = async () => {
+    async function checkLogin() {
       const cookies = Cookies.get();
       if (!cookies.token) {
         setIsAuthenticated(false);
@@ -64,24 +64,25 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
-        const res = await verifyTokenRequest(cookies.token);
-        console.log(res);
-        if (!res.data) return setIsAuthenticated(false);
+        const response = await verifyTokenRequest(cookies.token);
+        console.log(response);
+        if (!response.data) return setIsAuthenticated(false);
         setIsAuthenticated(true);
-        setUser(res.data);
+        // setUser(response.data);
+        setUser(response.data.user);
         setLoading(false);
       } catch (error) {
+        console.log("Error verifying token: ", error);
         setIsAuthenticated(false);
+        setUser(null);
         setLoading(false);
       }
-    };
+    }
     checkLogin();
   }, []);
 
   return (
-    <Authcontext.Provider
-      value={{ signup, signin, user, isAuthenticated, loading, errors }}
-    >
+    <Authcontext.Provider value={{ signup, signin, user, isAuthenticated, errors, loading }}>
       {children}
     </Authcontext.Provider>
   );
