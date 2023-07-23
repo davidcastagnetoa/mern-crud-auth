@@ -16,6 +16,16 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // clear errors after 5 seconds
+  useEffect(() => {
+    if (errors.length > 0) {
+      const timer = setTimeout(() => {
+        setErrors([]);
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
+
   const signup = async (user) => {
     try {
       const response = await registerRequest(user);
@@ -33,8 +43,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await loginRequest(user);
       console.log(response.data);
-      setIsAuthenticated(true);
       setUser(response.data);
+      setIsAuthenticated(true);
     } catch (error) {
       console.log(error);
       console.log(error.response.data);
@@ -43,15 +53,6 @@ export const AuthProvider = ({ children }) => {
         : setErrors([error.response.data.message]);
     }
   };
-
-  useEffect(() => {
-    if (errors.length > 0) {
-      const timer = setTimeout(() => {
-        setErrors([]);
-      }, 3500);
-      return () => clearTimeout(timer);
-    }
-  }, [errors]);
 
   // consulta hacia el backend, comprobacion de cookie
   useEffect(() => {
@@ -68,13 +69,13 @@ export const AuthProvider = ({ children }) => {
         console.log(response);
         if (!response.data) return setIsAuthenticated(false);
         setIsAuthenticated(true);
-        // setUser(response.data);
-        setUser(response.data.user);
+        // setUser(response.data.user);
+        setUser(response.data);
         setLoading(false);
       } catch (error) {
         console.log("Error verifying token: ", error);
         setIsAuthenticated(false);
-        setUser(null);
+        // setUser(null);
         setLoading(false);
       }
     }
@@ -82,7 +83,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <Authcontext.Provider value={{ signup, signin, user, isAuthenticated, errors, loading }}>
+    <Authcontext.Provider
+      value={{ signup, signin, user, isAuthenticated, errors, loading }}
+    >
       {children}
     </Authcontext.Provider>
   );
