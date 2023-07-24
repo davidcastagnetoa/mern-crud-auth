@@ -9,12 +9,14 @@ import ProfilePage from "./pages/ProfilePage";
 
 import ProtectedRoute from "./ProtectedRoute";
 import { TaskProvider } from "./context/TasksContext";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
     <AuthProvider>
       <TaskProvider>
         <BrowserRouter>
+          <Navbar />
           <Routes>
             {/* Public Pages */}
             <Route path="/" element={<HomePage />} />
