@@ -8,9 +8,12 @@ function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
   const { signup, isAuthenticated, errors: registerErrors } = useAuth();
   const navigate = useNavigate();
+
+  const password = watch("password");
 
   useEffect(() => {
     if (isAuthenticated) navigate("/tasks");
@@ -44,6 +47,7 @@ function RegisterPage() {
             className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
           />
           {errors.email && <p className="text-red-500">Email is required</p>}
+
           <input
             type="password"
             {...register("password", { required: true })}
@@ -51,6 +55,20 @@ function RegisterPage() {
             className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
           />
           {errors.password && <p className="text-red-500">Password is required</p>}
+
+          <input
+            type="password"
+            {...register("confirmPassword", {
+              required: true,
+              validate: (value) => value === password,
+            })}
+            placeholder="Confirm Password"
+            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
+          />
+          {errors.confirmPassword && (
+            <p className="text-red-500">New Password is different of Password</p>
+          )}
+
           <button type="submit">Register</button>
         </form>
         <p className="flex gap-x-2 justify-between">
