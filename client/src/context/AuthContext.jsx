@@ -54,6 +54,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    Cookies.remove("token");
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
   // consulta hacia el backend, comprobacion de cookie
   useEffect(() => {
     async function checkLogin() {
@@ -84,7 +90,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <Authcontext.Provider
-      value={{ signup, signin, user, isAuthenticated, errors, loading }}
+      value={{ signup, signin, user, isAuthenticated, errors, loading, logout }}
     >
       {children}
     </Authcontext.Provider>

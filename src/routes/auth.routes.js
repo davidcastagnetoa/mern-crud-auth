@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   register,
   login,
-  logout,
+  // logout,
   profile,
   verifyToken,
 } from "../controllers/auth.controllers.js";
@@ -18,8 +18,8 @@ router.post("/api/register", validateSchema(registerSchema), register);
 // Login
 router.post("/api/login", validateSchema(loginSchema), login);
 
-// Logout
-router.post("/api/logout", logout);
+// // Logout
+// router.post("/api/logout", logout);
 
 // Protected
 router.get("/api/profile", authRequired, profile);
