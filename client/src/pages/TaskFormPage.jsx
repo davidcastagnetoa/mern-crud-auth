@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTasks } from "../context/TasksContext";
+import Navbar from "../components/Navbar";
 
 function TaskFormPage() {
   const { createTask } = useTasks();
@@ -30,7 +31,7 @@ function TaskFormPage() {
           />
           <button>Save</button>
         </form>
-      </div>  
+      </div>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Button, Card, Elevation } from "@blueprintjs/core";
 
 function RegisterPage() {
   const {
@@ -23,9 +24,15 @@ function RegisterPage() {
     signup(values);
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className="flex items-center justify-center h-[calc(100vh-100px)]">
-      <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md space-y-2">
+      <Card
+        interactive={false}
+        elevation={Elevation.TWO}
+        className="bp5-dark max-w-md w-full p-10 rounded-md space-y-2"
+      >
         {registerErrors.map((error, i) => (
           <div className="bg-red-500 p-2 my-2 text-white" key={i}>
             {error}
@@ -48,36 +55,56 @@ function RegisterPage() {
           />
           {errors.email && <p className="text-red-500">Email is required</p>}
 
-          <input
-            type="password"
-            {...register("password", { required: true })}
-            placeholder="Password"
-            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
-          />
+          <div className="bp5-input-group">
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("password", { required: true })}
+              placeholder="Password"
+              className="bp5-input bp5-fill w-full"
+            />
+            <Button
+              icon={showPassword ? "unlock" : "lock"}
+              className="bp5-button bp5-minimal bp5-intent-warning"
+              onClick={() => {
+                setShowPassword(!showPassword);
+              }}
+            ></Button>
+          </div>
           {errors.password && <p className="text-red-500">Password is required</p>}
 
-          <input
-            type="password"
-            {...register("confirmPassword", {
-              required: true,
-              validate: (value) => value === password,
-            })}
-            placeholder="Confirm Password"
-            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
-          />
+          <div className="bp5-input-group">
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("confirmPassword", {
+                required: true,
+                validate: (value) => value === password,
+              })}
+              placeholder="Confirm Password"
+              className="bp5-input bp5-fill w-full"
+            />
+            <Button
+              icon={showPassword ? "unlock" : "lock"}
+              className="bp5-button bp5-minimal bp5-intent-warning"
+              onClick={() => {
+                setShowPassword(!showPassword);
+              }}
+            ></Button>
+          </div>
           {errors.confirmPassword && (
             <p className="text-red-500">New Password is different of Password</p>
           )}
 
-          <button type="submit">Register</button>
+          <Button icon="user" intent="success" type="submit">
+            Register
+          </Button>
         </form>
-        <p className="flex gap-x-2 justify-between">
+        <p className="flex gap-x-2 items-center justify-between">
           Already have an account?
-          <Link to="/login" className="text-blue-500 ">
+          <Link to="/login" className="bp5-button bp5-intent-primary">
             Sign In
           </Link>
         </p>
-      </div>
+      </Card>
     </div>
   );
 }
