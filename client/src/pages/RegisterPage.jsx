@@ -38,24 +38,34 @@ function RegisterPage() {
             {error}
           </div>
         ))}
-        <h1 className="text-2xl font-bold">Register</h1>
+        <h1 className="text-2xl font-thin pb-4">Register</h1>
         <form onSubmit={onSubmit} className="space-y-4">
-          <input
-            type="text"
-            {...register("username", { required: true })}
-            placeholder="Username"
-            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
-          />
-          {errors.username && <p className="text-red-500">Username is required</p>}
-          <input
-            type="email"
-            {...register("email", { required: true })}
-            placeholder="Email"
-            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
-          />
-          {errors.email && <p className="text-red-500">Email is required</p>}
+          <div className="bp5-input-group bp5-large">
+            <span className="bp5-icon bp5-icon-person" />
+            <input
+              type="text"
+              {...register("username", { required: true })}
+              placeholder="Username"
+              className="bp5-input bp5-fill"
+            />
+            {errors.username && (
+              <p className="text-red-500">Username is required</p>
+            )}
+          </div>
 
-          <div className="bp5-input-group">
+          <div className="bp5-input-group bp5-large">
+            <span className="bp5-icon bp5-icon-at" />
+            <input
+              type="email"
+              {...register("email", { required: true })}
+              placeholder="Email"
+              className="bp5-input bp5-fill w-full"
+            />
+            {errors.email && <p className="text-red-500">Email is required</p>}
+          </div>
+
+          <div className="bp5-input-group bp5-large">
+            <span className="bp5-icon bp5-icon-key" />
             <input
               type={showPassword ? "text" : "password"}
               {...register("password", { required: true })}
@@ -68,11 +78,14 @@ function RegisterPage() {
               onClick={() => {
                 setShowPassword(!showPassword);
               }}
-            ></Button>
+            />
           </div>
-          {errors.password && <p className="text-red-500">Password is required</p>}
+          {errors.password && (
+            <p className="text-red-500">Password is required</p>
+          )}
 
-          <div className="bp5-input-group">
+          <div className="bp5-input-group bp5-large">
+            <span className="bp5-icon bp5-icon-key" />
             <input
               type={showPassword ? "text" : "password"}
               {...register("confirmPassword", {
@@ -91,7 +104,9 @@ function RegisterPage() {
             ></Button>
           </div>
           {errors.confirmPassword && (
-            <p className="text-red-500">New Password is different of Password</p>
+            <p className="text-red-500">
+              New Password is different of Password
+            </p>
           )}
 
           <Button icon="user" intent="success" type="submit">
@@ -100,7 +115,10 @@ function RegisterPage() {
         </form>
         <p className="flex gap-x-2 items-center justify-between">
           Already have an account?
-          <Link to="/login" className="bp5-button bp5-intent-primary">
+          <Link
+            to="/login"
+            className="bp5-button bp5-intent-primary bp5-icon-log-in"
+          >
             Sign In
           </Link>
         </p>

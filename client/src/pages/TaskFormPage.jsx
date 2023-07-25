@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTasks } from "../context/TasksContext";
-import Navbar from "../components/Navbar";
+import { Button, Card, Elevation } from "@blueprintjs/core";
 
 function TaskFormPage() {
   const { createTask } = useTasks();
@@ -14,24 +14,34 @@ function TaskFormPage() {
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-100px)]">
-      <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md space-y-2">
+      <Card
+        interactive={false}
+        elevation={Elevation.TWO}
+        className="bp5-dark max-w-2xl w-full p-10 rounded-md space-y-2"
+      >
         <form onSubmit={onSubmit} className="space-y-2.5">
-          <input
-            type="text"
-            placeholder="Title"
-            {...register("title")}
-            autoFocus
-            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
-          />
+          <div className="bp5-input-group">
+            <span className="bp5-icon bp5-icon-edit" />
+            <input
+              type="text"
+              placeholder="Title"
+              {...register("title")}
+              autoFocus
+              className="bp5-input bp5-fill outline-none"
+            />
+          </div>
           <textarea
             rows="3"
             placeholder="Description"
             {...register("description")}
-            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
+            className="bp5-input bp5-fill min-h-[30rem] outline-none"
+            growVertically={true}
           />
-          <button>Save</button>
+          <Button icon="floppy-disk" intent="success">
+            Save
+          </Button>
         </form>
-      </div>
+      </Card>
     </div>
   );
 }
