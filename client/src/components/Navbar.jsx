@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Button, ButtonGroup, Elevation } from "@blueprintjs/core";
 
 function Navbar() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -11,7 +12,7 @@ function Navbar() {
       <h3 className="text-xl text-white">
         <Link
           to={isAuthenticated ? "/tasks" : "/"}
-          className="bp5-button bp5-icon-home bp5-large no-underline hover:no-underline mr-2"
+          className="bp5-button bp5-icon-home bp5-large outline-none mr-2"
         ></Link>
         Task Manager
       </h3>
@@ -21,10 +22,7 @@ function Navbar() {
             <li>Welcome {user.username}</li>
             <span className="bp5-navbar-divider"></span>
             <li>
-              <Link
-                to="/add-task"
-                className="bp5-button bp5-icon-document outline-none"
-              >
+              <Link to="/add-task" className="bp5-button bp5-icon-document outline-none">
                 Add Task
               </Link>
             </li>
@@ -32,18 +30,41 @@ function Navbar() {
               <Link
                 to="/"
                 onClick={() => logout()}
-                className="bp5-button bp5-intent-danger bp5-icon-document outline-none"
+                className="bp5-button bp5-intent-danger bp5-icon-log-out outline-none"
               >
                 Logout
               </Link>
             </li>
+            <span className="bp5-navbar-divider"></span>
+            <ButtonGroup>
+              <Button
+                icon="user"
+                minimal={false}
+                large={false}
+                disabled={true}
+                className="bp5-button outline-none"
+              />
+              <Button
+                icon="notifications"
+                minimal={false}
+                large={false}
+                disabled={true}
+                className="bp5-button outline-none"
+              />
+              <Button
+                icon="flash"
+                minimal={false}
+                large={false}
+                className="bp5-button outline-none"
+              />
+            </ButtonGroup>
           </>
         ) : (
           <>
             <li>
               <Link
                 to="/login"
-                className="bp5-button bp5-icon-log-in bg-indigo-500 outline-none px-4 py-1 rounded-sm"
+                className="bp5-button bp5-icon-log-in outline-none px-4 py-1 rounded-sm"
               >
                 Login
               </Link>
@@ -51,11 +72,27 @@ function Navbar() {
             <li>
               <Link
                 to="/register"
-                className="bp5-button bp5-icon-user bg-indigo-500 outline-none px-4 py-1 rounded-sm"
+                className="bp5-button bp5-icon-user outline-none px-4 py-1 rounded-sm"
               >
                 Register
               </Link>
             </li>
+            <span className="bp5-navbar-divider"></span>
+            <ButtonGroup>
+              <Button
+                icon="wrench"
+                minimal={false}
+                large={false}
+                disabled={true}
+                className="bp5-button outline-none"
+              />
+              <Button
+                icon="flash"
+                minimal={false}
+                large={false}
+                className="bp5-button outline-none"
+              />
+            </ButtonGroup>
           </>
         )}
       </ul>

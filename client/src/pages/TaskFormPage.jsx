@@ -2,24 +2,32 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useTasks } from "../context/TasksContext";
 import { Button, Card, Elevation } from "@blueprintjs/core";
+import { useNavigate } from "react-router-dom";
+
+import { Colors } from "@blueprintjs/core";
 
 function TaskFormPage() {
   const { createTask } = useTasks();
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
   const onSubmit = handleSubmit((data) => {
     console.log(data);
     createTask(data);
+    navigate("/tasks");
   });
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-100px)]">
+    <div
+      className="flex items-center justify-center h-[calc(100vh-100px)]"
+      style={{ background: Colors.DARK_GRAY1 }}
+    >
       <Card
         interactive={false}
         elevation={Elevation.TWO}
         className="bp5-dark max-w-2xl w-full p-10 rounded-md space-y-2"
       >
-        <form onSubmit={onSubmit} className="space-y-2.5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-2.5">
           <div className="bp5-input-group">
             <span className="bp5-icon bp5-icon-edit" />
             <input
@@ -35,9 +43,8 @@ function TaskFormPage() {
             placeholder="Description"
             {...register("description")}
             className="bp5-input bp5-fill min-h-[30rem] outline-none"
-            growVertically={true}
           />
-          <Button icon="floppy-disk" intent="success">
+          <Button type="submit" icon="floppy-disk" intent="success">
             Save
           </Button>
         </form>

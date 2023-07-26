@@ -8,7 +8,7 @@
 @tailwind utilities;
 
 body {
-  background: #252a31;
+  background: #1c2127;
   color: white;
-  font-family: 'Titillium Web', sans-serif;
+  font-family: "Titillium Web", sans-serif;
 }

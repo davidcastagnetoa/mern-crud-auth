@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useTasks } from "../context/TasksContext";
+import { Colors } from "@blueprintjs/core";
+import TaskCard from "../components/TaskCard";
 
 function TasksPage() {
   const { getTasks, tasks } = useTasks();
@@ -16,12 +18,12 @@ function TasksPage() {
     );
 
   return (
-    <div>
+    <div
+      className="flex flex-col justify-center items-center h-[calc(100vh-100px)] space-y-2"
+      style={{ background: Colors.DARK_GRAY1 }}
+    >
       {tasks.map((task) => (
-        <div key={task._id}>
-          <h1>{task.title}</h1>
-          <p>{task.description}</p>
-        </div>
+        <TaskCard task={task} key={task._id} />
       ))}
     </div>
   );

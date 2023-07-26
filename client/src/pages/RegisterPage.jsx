@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, Elevation } from "@blueprintjs/core";
 
+import { Colors } from "@blueprintjs/core";
+
 function RegisterPage() {
   const {
     register,
@@ -27,7 +29,10 @@ function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-100px)]">
+    <div
+      className="flex items-center justify-center h-[calc(100vh-100px)]"
+      style={{ background: Colors.DARK_GRAY1 }}
+    >
       <Card
         interactive={false}
         elevation={Elevation.TWO}
@@ -48,9 +53,7 @@ function RegisterPage() {
               placeholder="Username"
               className="bp5-input bp5-fill"
             />
-            {errors.username && (
-              <p className="text-red-500">Username is required</p>
-            )}
+            {errors.username && <p className="text-red-500">Username is required</p>}
           </div>
 
           <div className="bp5-input-group bp5-large">
@@ -80,9 +83,7 @@ function RegisterPage() {
               }}
             />
           </div>
-          {errors.password && (
-            <p className="text-red-500">Password is required</p>
-          )}
+          {errors.password && <p className="text-red-500">Password is required</p>}
 
           <div className="bp5-input-group bp5-large">
             <span className="bp5-icon bp5-icon-key" />
@@ -104,9 +105,7 @@ function RegisterPage() {
             ></Button>
           </div>
           {errors.confirmPassword && (
-            <p className="text-red-500">
-              New Password is different of Password
-            </p>
+            <p className="text-red-500">New Password is different of Password</p>
           )}
 
           <Button icon="user" intent="success" type="submit">
@@ -115,10 +114,7 @@ function RegisterPage() {
         </form>
         <p className="flex gap-x-2 items-center justify-between">
           Already have an account?
-          <Link
-            to="/login"
-            className="bp5-button bp5-intent-primary bp5-icon-log-in"
-          >
+          <Link to="/login" className="bp5-button bp5-intent-primary bp5-icon-log-in">
             Sign In
           </Link>
         </p>
