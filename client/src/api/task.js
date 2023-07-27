@@ -14,4 +14,4 @@ export const updateTaskRequest = (task) =>
   axios.put(`/tasks/${task._id}`, task);
 
 // Eliminar Tarea
-export const deleteTaskRequest = (id) => axios.delete(`/tasks/${id}`, task);
+export const deleteTaskRequest = (id) => axios.delete(`/tasks/${id}`);

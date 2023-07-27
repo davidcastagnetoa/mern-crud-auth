@@ -30,7 +30,7 @@ function RegisterPage() {
 
   return (
     <div
-      className="flex items-center justify-center h-[calc(100vh-100px)]"
+      className="flex items-center justify-center h-[calc(100vh)]"
       style={{ background: Colors.DARK_GRAY1 }}
     >
       <Card

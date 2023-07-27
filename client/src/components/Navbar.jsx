@@ -8,7 +8,7 @@ function Navbar() {
   console.log(user);
 
   return (
-    <nav className="bp5-navbar bp5-dark flex justify-between items-center py-2">
+    <nav className="bp5-navbar bp5-dark flex justify-between items-center py-2 fixed">
       <h3 className="text-xl text-white">
         <Link
           to={isAuthenticated ? "/tasks" : "/"}

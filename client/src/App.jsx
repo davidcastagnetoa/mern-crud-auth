@@ -16,7 +16,7 @@ const App = () => {
     <AuthProvider>
       <TaskProvider>
         <BrowserRouter>
-          <main className="Container mx-auto px-10">
+          <main className="Container">
             <Navbar />
             <Routes>
               {/* Public Pages */}

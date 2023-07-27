@@ -28,7 +28,7 @@ function LoginPage() {
   return (
     <div
       style={{ background: Colors.DARK_GRAY1 }}
-      className="flex items-center justify-center h-[calc(100vh-100px)]"
+      className="flex items-center justify-center h-[calc(100vh)]"
     >
       <Card
         interactive={false}
