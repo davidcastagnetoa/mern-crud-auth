@@ -1,14 +1,4 @@
-import {
-  Alert,
-  Button,
-  ButtonGroup,
-  Card,
-  Elevation,
-  Intent,
-  OverlayToaster,
-  Toast,
-  Toaster,
-} from "@blueprintjs/core";
+import { Alert, Button, ButtonGroup, Card, Elevation, Intent, Toaster } from "@blueprintjs/core";
 import { useEffect, useState } from "react";
 
 const toaster = Toaster.create();
@@ -41,7 +31,10 @@ function TaskCard({ task }) {
       elevation={Elevation.TWO}
       className="bp5-card bp5-dark w-4/6 bp5-vertical space-y-3.5"
     >
-      <h5 className="bp5-heading">{task.title}</h5>
+      <div className="flex flex-row items-center justify-between">
+        <h5 className="bp5-heading">{task.title}</h5>
+        <p className="text-xs font-extralight">{new Date(task.date).toLocaleDateString()}</p>
+      </div>
       <div className="bp5-divider" />
       <p>{task.description}</p>
       <div className="bp5-divider" />

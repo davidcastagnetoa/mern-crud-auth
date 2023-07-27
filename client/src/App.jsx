@@ -16,20 +16,22 @@ const App = () => {
     <AuthProvider>
       <TaskProvider>
         <BrowserRouter>
-          <Navbar />
-          <Routes>
-            {/* Public Pages */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            {/* Private Pages */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/tasks" element={<TasksPage />} />
-              <Route path="/add-task" element={<TaskFormPage />} />
-              <Route path="/tasks/:id" element={<TaskFormPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-            </Route>
-          </Routes>
+          <main className="Container mx-auto px-10">
+            <Navbar />
+            <Routes>
+              {/* Public Pages */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              {/* Private Pages */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/tasks" element={<TasksPage />} />
+                <Route path="/add-task" element={<TaskFormPage />} />
+                <Route path="/tasks/:id" element={<TaskFormPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+              </Route>
+            </Routes>
+          </main>
         </BrowserRouter>
       </TaskProvider>
     </AuthProvider>
