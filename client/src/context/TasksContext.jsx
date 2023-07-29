@@ -2,7 +2,9 @@ import { createContext, useContext, useState } from "react";
 import {
   createTaskRequest,
   getTasksRequest,
+  getTaskRequest,
   deleteTaskRequest,
+  updateTaskRequest,
 } from "../api/task";
 
 const TaskContext = createContext();
@@ -18,7 +20,7 @@ export const useTasks = () => {
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
 
-  //create Task
+  //Crear tareas
   const createTask = async (task) => {
     try {
       const response = await createTaskRequest(task);
@@ -28,7 +30,7 @@ export function TaskProvider({ children }) {
     }
   };
 
-  //Read Task
+  //Leer todas las tareas
   const getTasks = async () => {
     try {
       const response = await getTasksRequest();
@@ -41,7 +43,7 @@ export function TaskProvider({ children }) {
     }
   };
 
-  //Delete Task
+  //Eliminar una tarea
   const deleteTask = async (id) => {
     try {
       const response = await deleteTaskRequest(id);
@@ -50,7 +52,9 @@ export function TaskProvider({ children }) {
       if (response.status === 204) {
         setTasks((prevTasks) => {
           console.log("Current tasks:", prevTasks);
-          const newTasks = prevTasks.filter((task) => task._id !== id);
+          const newTasks = prevTasks.filter(
+            (task) => task._id !== id
+          );
           console.log("Tasks after deletion:", newTasks);
           return newTasks;
         });
@@ -60,8 +64,38 @@ export function TaskProvider({ children }) {
     }
   };
 
+  //Leer una tarea
+  const getTask = async (id) => {
+    try {
+      const response = await getTaskRequest(id);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //Actualizar una tarea
+  const updateTask = async (id, task) => {
+    try {
+      const response = await updateTaskRequest(id, task);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, createTask, getTasks, deleteTask }}>
+    <TaskContext.Provider
+      value={{
+        tasks,
+        createTask,
+        getTasks,
+        deleteTask,
+        getTask,
+        updateTask,
+      }}
+    >
       {children}
     </TaskContext.Provider>
   );

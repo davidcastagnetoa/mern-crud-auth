@@ -20,7 +20,7 @@ function TasksPage() {
   return (
     <div
       className="flex flex-col justify-center items-center pt-16 pb-6 space-y-2"
-      // className="grid grid-cols-3 gap-2"
+      // className="grid sm:grid-cols-2 md:grid-cols-3 gap-2"
       style={{ background: Colors.DARK_GRAY1 }}
     >
       {tasks.map((task) => (
