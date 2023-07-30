@@ -11,6 +11,7 @@ app.use(
   cors({
     origin: "https://mern-crud-auth.vercel.app",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
 
