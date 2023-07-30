@@ -19,9 +19,7 @@ export const register = async (req, res) => {
     if (password !== confirmPassword) {
       return res
         .status(400)
-        .json([
-          "Make sure the password and confirm password are correct",
-        ]);
+        .json(["Make sure the password and confirm password are correct"]);
     }
     // Encriptas la contraseña
     const passwordHash = await bcrypt.hash(password, 10);
@@ -35,8 +33,14 @@ export const register = async (req, res) => {
     const userSaved = await newUser.save();
     // Creas el token (payload)
     const token = await createAccessToken({ id: userSaved._id });
+    console.log("Token created: ", token);
     // Estableces en una cookie la respuesta
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+
     // Envias la respuesta
     res.json({
       id: userSaved._id,
@@ -57,24 +61,24 @@ export const login = async (req, res) => {
   try {
     // Buscar el usuario en la base de datos
     const userFound = await User.findOne({ email });
-    if (!userFound)
-      return res.status(400).json({ message: "User not found" });
+    if (!userFound) return res.status(400).json({ message: "User not found" });
 
     // compara la contraseña que escribe el usuario con la contraseña encriptada en la base de datos
-    const isMatch = await bcrypt.compare(
-      password,
-      userFound.password
-    );
+    const isMatch = await bcrypt.compare(password, userFound.password);
 
     // Si no coincide la contraseña, envia un mensaje de error
-    if (!isMatch)
-      return res.status(400).json({ message: "Invalid password" });
+    if (!isMatch) return res.status(400).json({ message: "Invalid password" });
 
     // Creas el token (payload)
     const token = await createAccessToken({ id: userFound._id });
+    console.log("Token created: ", token);
 
     // Estableces en una cookie la respuesta
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
 
     // Envias la respuesta
     res.json({
@@ -101,8 +105,7 @@ export const logout = (req, res) => {
 export const profile = async (req, res) => {
   const UserFound = await User.findById(req.user.id);
 
-  if (!UserFound)
-    return res.status(400).json({ message: "User not found" });
+  if (!UserFound) return res.status(400).json({ message: "User not found" });
   return res.json({
     id: UserFound._id,
     username: UserFound.username,
@@ -145,9 +148,7 @@ export const verifyToken = async (req, res) => {
   const token = req.cookies.token;
 
   if (!token)
-    return res
-      .status(401)
-      .json({ message: "Unauthorized, No token" });
+    return res.status(401).json({ message: "Unauthorized, No token" });
 
   // Verifica el token
   jwt.verify(token, TOKEN_SECRET, async (err, user) => {
@@ -156,9 +157,7 @@ export const verifyToken = async (req, res) => {
     // Si el token es valido, envia la respuesta
     const userFound = await User.findById(user.id);
     if (!userFound)
-      return res
-        .status(401)
-        .json({ message: "Unauthorized, Token not valid" });
+      return res.status(401).json({ message: "Unauthorized, Token not valid" });
 
     return res.json({
       id: userFound._id,
