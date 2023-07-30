@@ -8,20 +8,15 @@ import { FRONTEND_URL } from "./config.js";
 
 const app = express();
 
-app.use(
-  cors({
-    // origin: FRONTEND_URL,
-    origin: "*",
-    credentials: true,
-  })
-);
+app.use(cors());
+
 // app.use(
 //   cors({
-//     origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
+//     // origin: FRONTEND_URL,
+//     origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
 //     credentials: true,
 //   })
 // );
-// app.use(cors({ credentials: true }));
 
 app.use(morgan("dev"));
 app.use(express.json());
