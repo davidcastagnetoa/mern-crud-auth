@@ -113,31 +113,41 @@ export const profile = async (req, res) => {
   res.send("profile");
 };
 
+// export const verifyToken = async (req, res) => {
+//   const { token } = req.cookies;
+
+//   if (!token)
+//     return res
+//       .status(401)
+//       .json({ message: "Unauthorized, No token" });
+
+//   // Verifica el token
+//   jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+//     if (err) return res.status(401).json({ message: "Unauthorized" });
+
+//     // Si el token es valido, envia la respuesta
+//     const userFound = await User.findById(user.id);
+//     if (!userFound)
+//       return res
+//         .status(401)
+//         .json({ message: "Unauthorized, Token not valid" });
+
+//     return res.json({
+//       id: userFound._id,
+//       username: userFound.username,
+//       email: userFound.email,
+//     });
+//   });
+// };
+
 export const verifyToken = async (req, res) => {
-  const { token } = req.cookies;
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (!token)
     return res
       .status(401)
       .json({ message: "Unauthorized, No token" });
-
-  // // Verifica el token
-  // jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
-  //   if (err) return res.status(401).json({ message: "Unauthorized" });
-
-  //   // Si el token es valido, envia la respuesta
-  //   const userFound = await User.findById(user.id);
-  //   if (!userFound)
-  //     return res
-  //       .status(401)
-  //       .json({ message: "Unauthorized, Token not valid" });
-
-  //   return res.json({
-  //     id: userFound._id,
-  //     username: userFound.username,
-  //     email: userFound.email,
-  //   });
-  // });
 
   // Verifica el token
   jwt.verify(token, TOKEN_SECRET, async (err, user) => {
