@@ -19,12 +19,13 @@ function TaskFormPage() {
 
   const [dateValue, setDateValue] = useState(null);
 
-  const dateFnsFormat = "DD-MM-YYYY HH:mm:ss";
+  const dateFnsFormat = "YYYY-MM-DDTHH:mm:ss.SSS[Z]";
 
-  const formatDate = useCallback(
-    (date) => dayjs(date).format(dateFnsFormat),
-    []
-  );
+  const formatDate = useCallback((date) => {
+    const formattedDate = dayjs(date).toDate();
+    // console.log("Fecha formateada:", formattedDate);
+    return formattedDate;
+  }, []);
 
   const parseDate = useCallback(
     (str) => dayjs(str, dateFnsFormat).toDate(),
@@ -34,11 +35,11 @@ function TaskFormPage() {
   const handleChange = useCallback(
     (date) => {
       if (date) {
-        console.log("Fecha seleccionada:", date);
+        // console.log("Fecha seleccionada:", date);
         setDateValue(date);
         setValue("date", formatDate(date));
       } else {
-        console.log("Fecha borrada");
+        // console.log("Fecha borrada");
         setDateValue(null);
         setValue("date", null);
       }
@@ -50,7 +51,7 @@ function TaskFormPage() {
     async function loadTask() {
       if (params.id) {
         const task = await getTask(params.id);
-        console.log(task);
+        // console.log(task);
         setValue("title", task.title);
         setValue("description", task.description);
       }
@@ -59,11 +60,18 @@ function TaskFormPage() {
   }, []);
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    // const taskData = { ...data, date: formatDate(dateValue) };
+    // console.log("Enviando al servidor:", taskData);
+
+    const dataValid = { ...data };
+
+    // if (data.date) dataValid.date = formatDate(data.date);
+    if (dateValue) dataValid.date = formatDate(dateValue);
+
     if (params.id) {
-      updateTask(params.id, { ...data, date: dateValue });
+      updateTask(params.id, dataValid);
     } else {
-      createTask({ ...data, date: dateValue });
+      createTask(dataValid);
     }
     navigate("/tasks");
   });
