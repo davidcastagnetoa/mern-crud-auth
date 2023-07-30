@@ -60,12 +60,8 @@ function TaskFormPage() {
   }, []);
 
   const onSubmit = handleSubmit((data) => {
-    // const taskData = { ...data, date: formatDate(dateValue) };
-    // console.log("Enviando al servidor:", taskData);
-
     const dataValid = { ...data };
 
-    // if (data.date) dataValid.date = formatDate(data.date);
     if (dateValue) dataValid.date = formatDate(dateValue);
 
     if (params.id) {
