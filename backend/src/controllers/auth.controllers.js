@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
+import { TOKEN_SECRET } from "../config.js";
+
 // Registrar nuevo usuario
 export const register = async (req, res) => {
   const { username, email, password, confirmPassword } = req.body;
@@ -118,8 +120,27 @@ export const verifyToken = async (req, res) => {
     return res
       .status(401)
       .json({ message: "Unauthorized, No token" });
+
+  // // Verifica el token
+  // jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
+  //   if (err) return res.status(401).json({ message: "Unauthorized" });
+
+  //   // Si el token es valido, envia la respuesta
+  //   const userFound = await User.findById(user.id);
+  //   if (!userFound)
+  //     return res
+  //       .status(401)
+  //       .json({ message: "Unauthorized, Token not valid" });
+
+  //   return res.json({
+  //     id: userFound._id,
+  //     username: userFound.username,
+  //     email: userFound.email,
+  //   });
+  // });
+
   // Verifica el token
-  jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
+  jwt.verify(token, TOKEN_SECRET, async (err, user) => {
     if (err) return res.status(401).json({ message: "Unauthorized" });
 
     // Si el token es valido, envia la respuesta
