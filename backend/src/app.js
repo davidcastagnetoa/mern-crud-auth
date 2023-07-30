@@ -4,13 +4,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import taskRoutes from "./routes/task.routes.js";
-import { FRONTEND_URL } from "./config.js";
 
 const app = express();
 
 app.use(
   cors({
-    origin: FRONTEND_URL,
+    origin: "https://mern-crud-auth.vercel.app/",
     credentials: true,
   })
 );
