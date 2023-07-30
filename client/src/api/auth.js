@@ -15,7 +15,7 @@ export const loginRequest = async (user) => {
   return response;
 };
 
-export const verifyTokenRequest = async (token) => {
+export const verifyTokenRequest = async () => {
   // Obtener el token del almacenamiento local
   const token = localStorage.getItem("token");
   const response = await axios.get(`/verify`, {
