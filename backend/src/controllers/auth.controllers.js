@@ -141,8 +141,8 @@ export const profile = async (req, res) => {
 // };
 
 export const verifyToken = async (req, res) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  // Obtiene el token de las cookies
+  const token = req.cookies.token;
 
   if (!token)
     return res
