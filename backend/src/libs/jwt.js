@@ -2,7 +2,7 @@
 // se crea el token con el id del usuario
 
 import dotenv from "dotenv";
-dotenv.config();
+import { TOKEN_SECRET } from "../config.js";
 
 import jwt from "jsonwebtoken";
 
@@ -25,10 +25,10 @@ import jwt from "jsonwebtoken";
 
 export function createAccessToken(payload) {
   return new Promise((resolve, reject) => {
-    console.log(process.env.TOKEN_SECRET);
+    console.log(TOKEN_SECRET);
     jwt.sign(
       payload,
-      process.env.TOKEN_SECRET,
+      TOKEN_SECRET,
       {
         expiresIn: "1d",
       },
