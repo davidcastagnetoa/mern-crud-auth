@@ -12,11 +12,11 @@ export const registerRequest = async (user) => {
 export const loginRequest = async (user) => {
   // const response = await axios.post(`${api}/login`, user);
   const response = await axios.post(`/login`, user);
-  console.log("Token received: ", response.data.token)
+  console.log("Token received: ", response.data.token);
   // Guarda el token en las cookies
   document.cookie = `token=${response.data.token}`;
   // Guardar el token en el almacenamiento local
-  // localStorage.setItem('token', response.data.token);
+  localStorage.setItem("token", response.data.token);
   return response;
 };
 

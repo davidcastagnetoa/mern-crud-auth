@@ -19,23 +19,30 @@ export const register = async (req, res) => {
     if (password !== confirmPassword) {
       return res
         .status(400)
-        .json(["Make sure the password and confirm password are correct"]);
+        .json([
+          "Make sure the password and confirm password are correct",
+        ]);
     }
     // Encriptas la contraseña
     const passwordHash = await bcrypt.hash(password, 10);
+
     // Creas el usuario
     const newUser = new User({
       email,
       username,
       password: passwordHash,
     });
+
     // Guardas el usuario en la base de datos
     const userSaved = await newUser.save();
+
     // Creas el token (payload)
     const token = await createAccessToken({ id: userSaved._id });
     console.log("Token created: ", token);
+
     // Estableces en una cookie la respuesta
     res.cookie("token", token, {
+      // httpOnly: process.env.NODE_ENV !== "development",
       httpOnly: true,
       sameSite: "none",
       secure: true,
@@ -46,8 +53,6 @@ export const register = async (req, res) => {
       id: userSaved._id,
       username: userSaved.username,
       email: userSaved.email,
-      createdAt: userSaved.createdAt,
-      updateAt: userSaved.updateAt,
     });
   } catch (error) {
     console.log(error);
@@ -61,21 +66,32 @@ export const login = async (req, res) => {
   try {
     // Buscar el usuario en la base de datos
     const userFound = await User.findOne({ email });
-    if (!userFound) return res.status(400).json({ message: "User not found" });
+    if (!userFound)
+      return res
+        .status(400)
+        .json({ message: "User not found, email not exist" });
 
     // compara la contraseña que escribe el usuario con la contraseña encriptada en la base de datos
-    const isMatch = await bcrypt.compare(password, userFound.password);
+    const isMatch = await bcrypt.compare(
+      password,
+      userFound.password
+    );
 
     // Si no coincide la contraseña, envia un mensaje de error
-    if (!isMatch) return res.status(400).json({ message: "Invalid password" });
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid password" });
 
     // Creas el token (payload)
-    const token = await createAccessToken({ id: userFound._id });
+    const token = await createAccessToken({
+      id: userFound._id,
+      username: userFound.username,
+    });
     console.log("Token created: ", token);
 
     // Estableces en una cookie la respuesta
     res.cookie("token", token, {
       httpOnly: true,
+      // httpOnly: process.env.NODE_ENV !== "development",
       sameSite: "none",
       secure: true,
     });
@@ -85,11 +101,9 @@ export const login = async (req, res) => {
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
-      createdAt: userFound.createdAt,
-      updateAt: userFound.updateAt,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -105,13 +119,12 @@ export const logout = (req, res) => {
 export const profile = async (req, res) => {
   const UserFound = await User.findById(req.user.id);
 
-  if (!UserFound) return res.status(400).json({ message: "User not found" });
+  if (!UserFound)
+    return res.status(400).json({ message: "User not found" });
   return res.json({
     id: UserFound._id,
     username: UserFound.username,
     email: UserFound.email,
-    createdAt: UserFound.createdAt,
-    updateAt: UserFound.updateAt,
   });
   res.send("profile");
 };
@@ -146,18 +159,26 @@ export const profile = async (req, res) => {
 export const verifyToken = async (req, res) => {
   // Obtiene el token de las cookies
   const token = req.cookies.token;
+  console.log(token);
 
-  if (!token)
-    return res.status(401).json({ message: "Unauthorized, No token" });
+  if (!token) {
+    console.log("Unauthorized, No token");
+    return res
+      .status(401)
+      .json({ message: "Unauthorized, No token" });
+  }
 
   // Verifica el token
   jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-    if (err) return res.status(401).json({ message: "Unauthorized" });
+    if (err)
+      return res.sendStatus(401).json({ message: "Unauthorized" });
 
     // Si el token es valido, envia la respuesta
     const userFound = await User.findById(user.id);
     if (!userFound)
-      return res.status(401).json({ message: "Unauthorized, Token not valid" });
+      return res
+        .status(401)
+        .json({ message: "Unauthorized, Token not valid" });
 
     return res.json({
       id: userFound._id,
