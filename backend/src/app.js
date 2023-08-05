@@ -24,7 +24,12 @@ const app = express();
 // };
 
 // app.use(cors(corsOptions));
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://mern-crud-auth.vercel.app"],
+    credentials: true,
+  })
+);
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
