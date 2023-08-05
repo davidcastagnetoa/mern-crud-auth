@@ -46,6 +46,7 @@ export const register = async (req, res) => {
       httpOnly: true,
       sameSite: "none",
       secure: true,
+      maxAge: 86400000, // duración de 24 horas
     });
 
     // Envias la respuesta
@@ -94,6 +95,7 @@ export const login = async (req, res) => {
       // httpOnly: process.env.NODE_ENV !== "development",
       sameSite: "none",
       secure: true,
+      maxAge: 86400000, // duración de 24 horas
     });
 
     // Envias la respuesta
@@ -158,7 +160,7 @@ export const profile = async (req, res) => {
 
 export const verifyToken = async (req, res) => {
   // Obtiene el token de las cookies
-  const token = req.cookies.token;
+  const { token } = req.cookies;
   console.log(token);
 
   if (!token) {

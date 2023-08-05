@@ -1,12 +1,22 @@
-import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
+import {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+} from "react";
+import {
+  registerRequest,
+  loginRequest,
+  verifyTokenRequest,
+} from "../api/auth";
 import Cookies from "js-cookie";
 
 export const Authcontext = createContext();
 
 export const useAuth = () => {
   const context = useContext(Authcontext);
-  if (!context) throw new Error("useAuth must be used within an AuthProvider");
+  if (!context)
+    throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };
 
@@ -29,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (user) => {
     try {
       const response = await registerRequest(user);
-      console.log(`The response data is: \n${response.data}`);
+      console.log(`The response data is: \n${response}`);
       setUser(response.data);
       setIsAuthenticated(true);
     } catch (error) {
@@ -64,6 +74,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function checkLogin() {
       const cookies = Cookies.get();
+      console.log(cookies);
       if (!cookies.token) {
         setIsAuthenticated(false);
         setLoading(false);
@@ -90,7 +101,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <Authcontext.Provider
-      value={{ signup, signin, user, isAuthenticated, errors, loading, logout }}
+      value={{
+        signup,
+        signin,
+        user,
+        isAuthenticated,
+        errors,
+        loading,
+        logout,
+      }}
     >
       {children}
     </Authcontext.Provider>

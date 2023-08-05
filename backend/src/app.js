@@ -24,17 +24,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// app.use(
-//   cors({
-//     origin: "https://mern-crud-auth.vercel.app",
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//   })
-// );
-
-// app.use(cors({ credentials: true }));
-
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
