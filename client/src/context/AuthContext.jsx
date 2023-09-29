@@ -1,22 +1,12 @@
-import {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-} from "react";
-import {
-  registerRequest,
-  loginRequest,
-  verifyTokenRequest,
-} from "../api/auth";
+import { createContext, useState, useContext, useEffect } from "react";
+import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const Authcontext = createContext();
 
 export const useAuth = () => {
   const context = useContext(Authcontext);
-  if (!context)
-    throw new Error("useAuth must be used within an AuthProvider");
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };
 
@@ -36,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [errors]);
 
+  // Crear usuario
   const signup = async (user) => {
     try {
       const response = await registerRequest(user);
@@ -49,6 +40,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Logarse
   const signin = async (user) => {
     try {
       const response = await loginRequest(user);
@@ -64,38 +56,36 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    Cookies.remove("token");
-    setUser(null);
-    setIsAuthenticated(false);
+  // Deslogarse
+  const logout = async () => {
+    try {
+      await logoutRequest();
+      setUser(null);
+      setIsAuthenticated(false);
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   // consulta hacia el backend, comprobacion de cookie
   useEffect(() => {
     async function checkLogin() {
-      const cookies = Cookies.get();
-      console.log(cookies);
-      if (!cookies.token) {
-        setIsAuthenticated(false);
-        setLoading(false);
-        return;
-      }
-
       try {
-        const response = await verifyTokenRequest(cookies.token);
-        console.log(response);
+        const response = await verifyTokenRequest();
+        console.log(`Datos del usuario recuperado:`, response.data);
+
         if (!response.data) return setIsAuthenticated(false);
+
         setIsAuthenticated(true);
-        // setUser(response.data.user);
         setUser(response.data);
-        setLoading(false);
+        setLoading(false); // Deberia ser true
       } catch (error) {
         console.log("Error verifying token: ", error);
         setIsAuthenticated(false);
-        // setUser(null);
         setLoading(false);
       }
     }
+
     checkLogin();
   }, []);
 

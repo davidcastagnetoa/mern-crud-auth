@@ -12,6 +12,7 @@ function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const { signin, isAuthenticated, errors: signinErrors } = useAuth();
   const navigate = useNavigate();
 

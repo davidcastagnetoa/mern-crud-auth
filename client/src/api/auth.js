@@ -1,10 +1,9 @@
 import axios from "./axios";
+axios.defaults.withCredentials = true;
 
 export const registerRequest = async (user) => {
   // const response = await axios.post(`${api}/register`, user);
   const response = await axios.post(`/register`, user);
-  // Guarda el token en las cookies
-  // document.cookie = `token=${response.data.token}`;
   console.log(response);
   return response;
 };
@@ -12,20 +11,22 @@ export const registerRequest = async (user) => {
 export const loginRequest = async (user) => {
   // const response = await axios.post(`${api}/login`, user);
   const response = await axios.post(`/login`, user);
-  console.log("response received: ", response);
-  console.log("Token received: ", response.data.token);
-  // Guarda el token en las cookies
-  // document.cookie = `token=${response.data.token}`;
-  // Guardar el token en el almacenamiento local
-  localStorage.setItem("token", response.data.token);
+  console.log("response received: ", response); // Obtiene datos de usuario
   return response;
 };
 
-export const verifyTokenRequest = async (token) => {
-  // Obtener el token del almacenamiento local
-  // const token = localStorage.getItem("token");
-  const response = await axios.get(`/verify`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const logoutRequest = async () => {
+  const response = await axios.get("/logout");
+  if (!response) {
+    console.log("No te has deslogado, revisa el codigo joder!!");
+  }
+  console.log("response", response);
+};
+
+export const verifyTokenRequest = async () => {
+  const response = await axios.get(`/verify`, { withCredentials: true });
+  if (!response) {
+    console.log("No hay ningun token recuperado, revisa el codigo joder!!");
+  }
   return response;
 };

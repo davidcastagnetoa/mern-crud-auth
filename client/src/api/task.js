@@ -1,4 +1,5 @@
 import axios from "./axios";
+axios.defaults.withCredentials = true;
 
 // Obtener todas las Tareas por usuario
 export const getTasksRequest = () => axios.get("/tasks");
@@ -10,8 +11,7 @@ export const getTaskRequest = (id) => axios.get(`/tasks/${id}`);
 export const createTaskRequest = (task) => axios.post("/tasks", task);
 
 // Actualizar Tarea
-export const updateTaskRequest = (id, task) =>
-  axios.put(`/tasks/${id}`, task);
+export const updateTaskRequest = (id, task) => axios.put(`/tasks/${id}`, task);
 
 // Eliminar Tarea
 export const deleteTaskRequest = (id) => axios.delete(`/tasks/${id}`);
