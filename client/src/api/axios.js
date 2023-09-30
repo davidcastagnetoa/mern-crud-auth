@@ -7,13 +7,13 @@ const instance = axios.create({
 
   // Amazon EC2 Server
   // baseURL: "http://ec2-54-89-206-14.compute-1.amazonaws.com/api",
-  // baseURL: "http://ec2-54-89-206-14.compute-1.amazonaws.com:8080/api",
+  baseURL: "http://ec2-54-89-206-14.compute-1.amazonaws.com:8080/api",
 
   // Render Server
   // baseURL: "https://tasks-server-mern.onrender.com/api",
 
   // Vercel Server
-  baseURL: "https://mern-crud-auth-backend.vercel.app/api",
+  // baseURL: "https://mern-crud-auth-backend.vercel.app/api", // En reparacion
   withCredentials: true,
 });
 
