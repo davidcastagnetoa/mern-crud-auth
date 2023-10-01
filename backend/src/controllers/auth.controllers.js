@@ -104,7 +104,7 @@ export const logout = (req, res) => {
   return res.sendStatus(200);
 };
 
-// Rutas protegidas verificar si el usuario esta logueado o no
+// Rutas protegidas verificar si el usuario esta logueado o nocookieParser
 // Perfil del usuario
 export const profile = async (req, res) => {
   const UserFound = await User.findById(req.user.id);

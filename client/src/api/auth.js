@@ -16,7 +16,7 @@ export const loginRequest = async (user) => {
 };
 
 export const logoutRequest = async () => {
-  const response = await axios.get("/logout");
+  const response = await axios.post("/logout", null, { withCredentials: true });
   if (!response) {
     console.log("No te has deslogado, revisa el codigo joder!!");
   }
