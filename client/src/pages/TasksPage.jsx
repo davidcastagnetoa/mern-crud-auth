@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useTasks } from "../context/TasksContext";
 import { Colors } from "@blueprintjs/core";
 import TaskCard from "../components/TaskCard";

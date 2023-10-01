@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTasks } from "../context/TasksContext";
 import { Button, Card, Elevation } from "@blueprintjs/core";
@@ -27,10 +27,7 @@ function TaskFormPage() {
     return formattedDate;
   }, []);
 
-  const parseDate = useCallback(
-    (str) => dayjs(str, dateFnsFormat).toDate(),
-    []
-  );
+  const parseDate = useCallback((str) => dayjs(str, dateFnsFormat).toDate(), []);
 
   const handleChange = useCallback(
     (date) => {
@@ -82,10 +79,7 @@ function TaskFormPage() {
         elevation={Elevation.TWO}
         className="bp5-dark max-w-2xl w-full p-10 rounded-md space-y-2"
       >
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-2.5"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-2.5">
           <div className="space-y-1.5">
             <label htmlFor="title">Title</label>
             <div className="bp5-input-group">
@@ -120,12 +114,7 @@ function TaskFormPage() {
               clearButtonText="Clear"
               className="w-1/3"
             />
-            <Button
-              type="submit"
-              icon="floppy-disk"
-              intent="success"
-              className="w-1/4"
-            >
+            <Button type="submit" icon="floppy-disk" intent="success" className="w-1/4">
               Save
             </Button>
           </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button, ButtonGroup } from "@blueprintjs/core";
@@ -22,10 +21,7 @@ function Navbar() {
             <li>Welcome {user.username}</li>
             <span className="bp5-navbar-divider"></span>
             <li>
-              <Link
-                to="/add-task"
-                className="bp5-button bp5-icon-document outline-none"
-              >
+              <Link to="/add-task" className="bp5-button bp5-icon-document outline-none">
                 Add Task
               </Link>
             </li>
