@@ -13,7 +13,7 @@ router.post("/api/register", validateSchema(registerSchema), register);
 router.post("/api/login", validateSchema(loginSchema), login);
 
 // Logout
-router.get("/api/logout", logout);
+router.post("/api/logout", logout);
 
 // Protected
 router.get("/api/profile", authRequired, profile);

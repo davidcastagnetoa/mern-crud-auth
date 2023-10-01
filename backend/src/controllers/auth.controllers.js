@@ -100,8 +100,13 @@ export const login = async (req, res) => {
 // Cerrar sesion
 export const logout = (req, res) => {
   // vacia el token y expira la cookie
-  res.cookie("token", "", { expires: new Date(0) });
-  return res.sendStatus(200);
+  res.cookie("token", "", {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+    expires: new Date(0),
+  });
+  return res.status(200).json({ message: "Token was deleted!" });
 };
 
 // Rutas protegidas verificar si el usuario esta logueado o nocookieParser
