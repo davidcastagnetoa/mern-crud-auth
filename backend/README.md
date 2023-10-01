@@ -15,7 +15,7 @@ A Node.js backend application for managing tasks. Users can register, log in, lo
 - Express
 - MongoDB
 - JWT for authentication
-- Yup for data validation
+- Zod for data validation
 
 ## Installation & Setup
 

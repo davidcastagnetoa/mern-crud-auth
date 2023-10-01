@@ -15,7 +15,7 @@ Una aplicación backend con Node.js para gestionar tareas. Los usuarios pueden r
 - Express
 - MongoDB
 - JWT para autenticación
-- Yup para validación de datos
+- Zod para validación de datos
 
 ## Instalación y Configuración
 
