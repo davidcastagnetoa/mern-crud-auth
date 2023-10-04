@@ -6,7 +6,7 @@ import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 
 const router = Router();
 
-// Registe
+// Register
 router.post("/api/register", validateSchema(registerSchema), register);
 
 // Login
@@ -17,7 +17,6 @@ router.post("/api/logout", logout);
 
 // Protected
 router.get("/api/profile", authRequired, profile);
-// router.get("/api/tasks", authRequired, tasks);
 
 router.get("/api/verify", verifyToken);
 

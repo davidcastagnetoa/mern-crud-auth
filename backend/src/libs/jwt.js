@@ -25,7 +25,7 @@ import jwt from "jsonwebtoken";
 
 export function createAccessToken(payload) {
   return new Promise((resolve, reject) => {
-    console.log(TOKEN_SECRET);
+    console.log("Remember to delete this line, the TOKE_SECRET is :" + TOKEN_SECRET);
     jwt.sign(
       payload,
       TOKEN_SECRET,

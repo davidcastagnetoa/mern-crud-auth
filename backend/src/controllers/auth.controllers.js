@@ -9,7 +9,23 @@ import { TOKEN_SECRET } from "../config.js";
 
 // Registrar nuevo usuario
 export const register = async (req, res) => {
-  const { username, email, password, confirmPassword } = req.body;
+  const {
+    username,
+    email,
+    password,
+    confirmPassword,
+    firstName,
+    lastName,
+    language,
+    birthDate: birthDateString,
+    city,
+    country,
+    avatar,
+  } = req.body;
+
+  // Convertir la cadena de fecha de nacimiento a un objeto Date. Recuerda modificar el backend para asegurar que siempre recibe un Objeto Date, esto es sólo para pruebas en Postman
+  const birthDate = req.body.birthDate ? new Date(req.body.birthDate) : undefined;
+
   try {
     const userFound = await User.findOne({ email });
     if (userFound) {
@@ -27,6 +43,13 @@ export const register = async (req, res) => {
       email,
       username,
       password: passwordHash,
+      firstName,
+      lastName,
+      language,
+      birthDate,
+      city,
+      country,
+      avatar,
     });
 
     // Guardas el usuario en la base de datos
@@ -50,9 +73,16 @@ export const register = async (req, res) => {
       id: userSaved._id,
       username: userSaved.username,
       email: userSaved.email,
+      firstName: userSaved.firstName,
+      lastName: userSaved.lastName,
+      language: userSaved.language,
+      birthDate: userSaved.birthDate,
+      city: userSaved.city,
+      country: userSaved.country,
+      avatar: userSaved.avatar,
     });
   } catch (error) {
-    console.log(error);
+    console.log("Error trying to register new user :" + error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -91,8 +121,16 @@ export const login = async (req, res) => {
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
+      firstName: userFound.firstName,
+      lastName: userFound.lastName,
+      language: userFound.language,
+      birthDate: userFound.birthDate,
+      city: userFound.city,
+      country: userFound.country,
+      avatar: userFound.avatar,
     });
   } catch (error) {
+    console.log("Error trying to login :" + error);
     return res.status(500).json({ message: error.message });
   }
 };
@@ -109,16 +147,27 @@ export const logout = (req, res) => {
   return res.status(200).json({ message: "Token was deleted!" });
 };
 
-// Rutas protegidas verificar si el usuario esta logueado o nocookieParser
+// Rutas protegidas verificar si el usuario esta logueado o no cookieParser
 // Perfil del usuario
 export const profile = async (req, res) => {
   const UserFound = await User.findById(req.user.id);
 
-  if (!UserFound) return res.status(400).json({ message: "User not found" });
+  if (!UserFound) {
+    console.log("Usuario no encontrado");
+    return res.status(400).json({ message: "User not found" });
+  }
+  console.log("Usuario encontrado, estos son sus datos: " + JSON.stringify(res.json));
   return res.json({
     id: UserFound._id,
     username: UserFound.username,
     email: UserFound.email,
+    firstName: UserFound.firstName,
+    lastName: UserFound.lastName,
+    language: UserFound.language,
+    birthDate: UserFound.birthDate,
+    city: UserFound.city,
+    country: UserFound.country,
+    avatar: UserFound.avatar,
   });
   res.send("profile");
 };
@@ -136,16 +185,32 @@ export const verifyToken = async (req, res) => {
 
   // Verifica el token
   jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-    if (err) return res.sendStatus(401).json({ message: "Unauthorized" });
+    if (err) {
+      console.log("Error al verificar token. No autorizado");
+      return res.sendStatus(401).json({ message: "Unauthorized" });
+    }
 
     // Si el token es valido, envia la respuesta
     const userFound = await User.findById(user.id);
-    if (!userFound) return res.status(401).json({ message: "Unauthorized, Token not valid" });
+    if (!userFound) {
+      console.log("Token no valido, No autorizado");
+      return res.status(401).json({ message: "Unauthorized, Token not valid" });
+    }
 
+    console.log(
+      "Usuario encontrado, token verificado estos son sus datos: " + JSON.stringify(res.json)
+    );
     return res.json({
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
+      firstName: userFound.firstName,
+      lastName: userFound.lastName,
+      language: userFound.language,
+      birthDate: userFound.birthDate,
+      city: userFound.city,
+      country: userFound.country,
+      avatar: userFound.avatar,
     });
   });
 };

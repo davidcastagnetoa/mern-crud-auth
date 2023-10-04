@@ -3,7 +3,7 @@ axios.defaults.withCredentials = true;
 
 const instance = axios.create({
   // Local Server
-  // baseURL: "http://localhost:8080/api",
+  baseURL: "http://localhost:8080/api",
 
   // Amazon EC2 Server
   // baseURL: "http://ec2-54-89-206-14.compute-1.amazonaws.com/api", // Pending SSL Certificate
@@ -13,7 +13,7 @@ const instance = axios.create({
   // baseURL: "https://tasks-server-mern.onrender.com/api",
 
   // Vercel Server
-  baseURL: "https://backend-eta-six.vercel.app/api",
+  // baseURL: "https://backend-eta-six.vercel.app/api",
   withCredentials: true,
 });
 

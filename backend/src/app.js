@@ -11,7 +11,7 @@ const whitelist = ["https://mern-crud-auth.vercel.app", "http://localhost:5173"]
 // Middleware personalizado para configurar CORS basado en la lista blanca
 app.use((req, res, next) => {
   const origin = req.get("origin");
-  console.log(origin);
+  console.log("The origin is :" + origin);
 
   if (whitelist.indexOf(origin) !== -1) {
     res.header("Access-Control-Allow-Origin", origin);

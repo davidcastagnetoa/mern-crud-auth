@@ -15,7 +15,7 @@ export const getTasks = async (req, res) => {
 export const createTask = async (req, res) => {
   try {
     const { title, description, date } = req.body;
-    console.log(req.user);
+    console.log("The data User in createTask is :" + req.user);
     const newTask = new Task({
       title,
       description,
@@ -25,6 +25,7 @@ export const createTask = async (req, res) => {
     const savedTask = await newTask.save();
     res.json(savedTask);
   } catch (error) {
+    console.log("Something went wrong" + error);
     return res.status(500).json({ message: "Something went wrong" + error.message });
   }
 };

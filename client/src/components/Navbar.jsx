@@ -4,7 +4,7 @@ import { Button, ButtonGroup } from "@blueprintjs/core";
 
 function Navbar() {
   const { isAuthenticated, user, logout } = useAuth();
-  console.log(user);
+  console.log("in NavBar.jsx, user data recorvery is :" + JSON.stringify(user));
 
   return (
     <nav className="bp5-navbar bp5-dark flex justify-between items-center py-2 fixed">
@@ -18,7 +18,7 @@ function Navbar() {
       <ul className="flex gap-x-2 items-center">
         {isAuthenticated ? (
           <>
-            <li>Welcome {user.username}</li>
+            <li>Welcome {user.firstName}</li>
             <span className="bp5-navbar-divider"></span>
             <li>
               <Link to="/add-task" className="bp5-button bp5-icon-document outline-none">
@@ -36,13 +36,7 @@ function Navbar() {
             </li>
             <span className="bp5-navbar-divider"></span>
             <ButtonGroup>
-              <Button
-                icon="user"
-                minimal={false}
-                large={false}
-                disabled={true}
-                className="bp5-button outline-none"
-              />
+              <Link to="/profile" className="bp5-button bp5-icon-user outline-none" />
               <Button
                 icon="notifications"
                 minimal={false}

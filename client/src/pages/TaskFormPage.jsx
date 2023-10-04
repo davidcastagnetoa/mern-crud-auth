@@ -19,11 +19,17 @@ function TaskFormPage() {
 
   const [dateValue, setDateValue] = useState(null);
 
-  const dateFnsFormat = "YYYY-MM-DDTHH:mm:ss.SSS[Z]";
+  const dateFnsFormat = "YYYY-MM-DD";
+
+  const beautyDate = useCallback((date) => {
+    const myDate = dayjs(date).format("DD/MM/YYYY");
+    console.log("Fecha a mostrar:", myDate);
+    return myDate;
+  }, []);
 
   const formatDate = useCallback((date) => {
     const formattedDate = dayjs(date).toDate();
-    // console.log("Fecha formateada:", formattedDate);
+    console.log("Fecha formateada:", formattedDate);
     return formattedDate;
   }, []);
 
@@ -32,16 +38,16 @@ function TaskFormPage() {
   const handleChange = useCallback(
     (date) => {
       if (date) {
-        // console.log("Fecha seleccionada:", date);
+        console.log("Fecha seleccionada:", date);
         setDateValue(date);
-        setValue("date", formatDate(date));
+        setValue("date", beautyDate(date));
       } else {
-        // console.log("Fecha borrada");
+        console.log("Fecha borrada");
         setDateValue(null);
         setValue("date", null);
       }
     },
-    [setValue, formatDate]
+    [setValue, beautyDate]
   );
 
   useEffect(() => {
@@ -104,11 +110,11 @@ function TaskFormPage() {
           </div>
           <div className="flex items-center justify-between flex-row">
             <DateInput
-              formatDate={formatDate}
+              formatDate={beautyDate} // muestra la fecha seleccionada en un formato a elegir
               onChange={handleChange}
               parseDate={parseDate}
               placeholder={dateFnsFormat}
-              value={dateValue}
+              value={dateValue} // Fecha formateada a enviar a backend
               showActionsBar={true}
               canClearSelection={true}
               clearButtonText="Clear"

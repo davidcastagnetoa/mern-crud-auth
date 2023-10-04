@@ -27,7 +27,46 @@ const userSchema = new mongoose.Schema(
         "Ingrese un correo electrónico válido",
       ],
     },
-  },  
+    // Nuevos campos agregados:
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    language: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    birthDate: {
+      type: Date,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    country: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    avatar: {
+      type: String,
+      validate: {
+        validator: function (value) {
+          return value.startsWith("http://") || value.startsWith("https://");
+        },
+        message: "El avatar debe ser una URL válida.",
+      },
+    },
+  },
   {
     timestamps: true,
   }

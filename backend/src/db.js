@@ -6,6 +6,6 @@ export const connectDB = async () => {
     await mongoose.connect(MONGODB_URI);
     console.log("MongoDB Connected...");
   } catch (error) {
-    console.log(error);
+    console.log("Error, cannot to connect to MongoDB, verify credentials", error);
   }
 };

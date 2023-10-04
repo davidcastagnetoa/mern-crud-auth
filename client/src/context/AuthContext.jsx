@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const response = await loginRequest(user);
-      console.log(response.data);
+      console.log("In AuthContext, user data recorvery are :" + JSON.stringify(response.data));
       setUser(response.data);
       setIsAuthenticated(true);
     } catch (error) {
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     async function checkLogin() {
       try {
         const response = await verifyTokenRequest();
-        console.log(`Datos del usuario recuperado:`, response.data);
+        console.log(`Datos del usuario recuperado:`, response.data); //REvisar Aqui
 
         if (!response.data) return setIsAuthenticated(false);
 
