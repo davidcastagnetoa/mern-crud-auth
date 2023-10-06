@@ -118,7 +118,7 @@ function TaskFormPage() {
               parseDate={parseDate}
               placeholder={dateFnsFormat}
               value={dateValue} // Fecha formateada a enviar a backend
-              showActionsBar={true}
+              showActionsBar={false}
               canClearSelection={true}
               clearButtonText="Clear"
               className="w-1/3"

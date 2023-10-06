@@ -13,3 +13,13 @@ body {
   /* color: white; */
   font-family: "Titillium Web", sans-serif;
 }
+#root
+  > main
+  > div.flex.items-center.justify-center.h-\[calc\(100vh\)\]
+  > div
+  > form
+  > div:nth-child(3)
+  > div
+  > input {
+  padding-left: 40px;
+}
