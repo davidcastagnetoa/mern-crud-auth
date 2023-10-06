@@ -10,6 +10,7 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
 import "react-day-picker/dist/style.css";
+import { useTheme } from "../context/ThemeContext";
 
 function TaskFormPage() {
   const { createTask, getTask, updateTask } = useTasks();
@@ -75,15 +76,17 @@ function TaskFormPage() {
     navigate("/tasks");
   });
 
+  const { isDarkMode } = useTheme();
+
   return (
     <div
       className="flex items-center justify-center h-[calc(100vh)]"
-      style={{ background: Colors.DARK_GRAY1 }}
+      style={isDarkMode ? { background: Colors.DARK_GRAY1 } : { background: Colors.LIGHT_GRAY3 }}
     >
       <Card
         interactive={false}
         elevation={Elevation.TWO}
-        className="bp5-dark max-w-2xl w-full p-10 rounded-md space-y-2"
+        className="max-w-2xl w-full p-10 rounded-md space-y-2"
       >
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-2.5">
           <div className="space-y-1.5">

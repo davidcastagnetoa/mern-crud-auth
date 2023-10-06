@@ -1,12 +1,4 @@
-import {
-  Alert,
-  Button,
-  ButtonGroup,
-  Card,
-  Elevation,
-  Intent,
-  Toaster,
-} from "@blueprintjs/core";
+import { Alert, Button, ButtonGroup, Card, Elevation, Intent, Toaster } from "@blueprintjs/core";
 import { useEffect, useState } from "react";
 import { useTasks } from "../context/TasksContext";
 import { Link } from "react-router-dom";
@@ -57,13 +49,11 @@ function TaskCard({ task }) {
     <Card
       interactive={true}
       elevation={Elevation.TWO}
-      className="bp5-card bp5-dark w-4/6 bp5-vertical space-y-3.5"
+      className="bp5-card w-4/6 bp5-vertical space-y-3.5"
     >
       <div className="flex flex-row items-center justify-between">
         <h5 className="bp5-heading">{task.title}</h5>
-        <p className="text-xs font-extralight">
-          {new Date(task.date).toLocaleDateString()}
-        </p>
+        <p className="text-xs font-extralight">{new Date(task.date).toLocaleDateString()}</p>
       </div>
       <div className="bp5-divider" />
       <p>{task.description}</p>
@@ -96,7 +86,7 @@ function TaskCard({ task }) {
           }}
           confirmButtonText="Move to Trash"
           onConfirm={deleteTaskHandle}
-          className="bp5-dialog bp5-alert bp5-dark outline-none"
+          className="bp5-dialog bp5-alert outline-none"
           icon="trash"
         >
           <p>Desea eliminar esta tarea?</p>
@@ -112,7 +102,7 @@ function TaskCard({ task }) {
           }}
           confirmButtonText="Edit Task?"
           onConfirm={editTaskHandle}
-          className="bp5-dialog bp5-alert bp5-dark outline-none"
+          className="bp5-dialog bp5-alert outline-none"
           icon="edit"
         >
           <p>Desea editar esta tarea?</p>

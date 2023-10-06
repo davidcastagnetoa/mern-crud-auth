@@ -1,28 +1,37 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Button, ButtonGroup } from "@blueprintjs/core";
+import { Button, ButtonGroup, Navbar, NavbarHeading } from "@blueprintjs/core";
+import { useTheme } from "../context/ThemeContext";
+import { useLanguage } from "../context/LanguageContext";
+import translations from "../assets/translations";
 
-function Navbar() {
+function NavigationBar() {
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const { isAuthenticated, user, logout } = useAuth();
   console.log("in NavBar.jsx, user data recorvery is :" + JSON.stringify(user));
 
+  const { language } = useLanguage();
+  const words = translations[language] || translations["english"];
+
   return (
-    <nav className="bp5-navbar bp5-dark flex justify-between items-center py-2 fixed">
-      <h3 className="text-xl text-white">
+    <Navbar className="bp5-navbar flex justify-between items-center py-2 fixed">
+      <NavbarHeading className="bp5-navbar-heading">
         <Link
           to={isAuthenticated ? "/tasks" : "/"}
           className="bp5-button bp5-icon-home bp5-large outline-none mr-2"
         ></Link>
-        Task Manager
-      </h3>
+        {words.taskManager}
+      </NavbarHeading>
       <ul className="flex gap-x-2 items-center">
         {isAuthenticated ? (
           <>
-            <li>Welcome {user.firstName}</li>
+            <li>
+              {words.welcome} {user.firstName}
+            </li>
             <span className="bp5-navbar-divider"></span>
             <li>
               <Link to="/add-task" className="bp5-button bp5-icon-document outline-none">
-                Add Task
+                {words.addTask}
               </Link>
             </li>
             <li>
@@ -31,7 +40,7 @@ function Navbar() {
                 onClick={() => logout()}
                 className="bp5-button bp5-intent-danger bp5-icon-log-out outline-none"
               >
-                Logout
+                {words.logout}
               </Link>
             </li>
             <span className="bp5-navbar-divider"></span>
@@ -49,6 +58,7 @@ function Navbar() {
                 minimal={false}
                 large={false}
                 className="bp5-button outline-none"
+                onClick={toggleDarkMode}
               />
             </ButtonGroup>
           </>
@@ -59,7 +69,7 @@ function Navbar() {
                 to="/login"
                 className="bp5-button bp5-icon-log-in outline-none px-4 py-1 rounded-sm"
               >
-                Login
+                {words.login}
               </Link>
             </li>
             <li>
@@ -67,7 +77,7 @@ function Navbar() {
                 to="/register"
                 className="bp5-button bp5-icon-user outline-none px-4 py-1 rounded-sm"
               >
-                Register
+                {words.register}
               </Link>
             </li>
             <span className="bp5-navbar-divider"></span>
@@ -84,13 +94,14 @@ function Navbar() {
                 minimal={false}
                 large={false}
                 className="bp5-button outline-none"
+                onClick={toggleDarkMode}
               />
             </ButtonGroup>
           </>
         )}
       </ul>
-    </nav>
+    </Navbar>
   );
 }
 
-export default Navbar;
+export default NavigationBar;

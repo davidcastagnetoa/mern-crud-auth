@@ -9,7 +9,7 @@
 @tailwind utilities;
 
 body {
-  background: #1c2127;
-  color: white;
+  /* background: #1c2127; */
+  /* color: white; */
   font-family: "Titillium Web", sans-serif;
 }

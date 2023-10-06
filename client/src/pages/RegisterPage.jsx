@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, Elevation } from "@blueprintjs/core";
 
 import { Colors } from "@blueprintjs/core";
+import { useTheme } from "../context/ThemeContext";
 
 function RegisterPage() {
   const {
@@ -27,16 +28,17 @@ function RegisterPage() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const { isDarkMode } = useTheme();
 
   return (
     <div
       className="flex items-center justify-center h-[calc(100vh)]"
-      style={{ background: Colors.DARK_GRAY1 }}
+      style={isDarkMode ? { background: Colors.DARK_GRAY1 } : { background: Colors.LIGHT_GRAY3 }}
     >
       <Card
         interactive={false}
         elevation={Elevation.TWO}
-        className="bp5-dark max-w-md w-full p-10 rounded-md space-y-2"
+        className="max-w-md w-full p-10 rounded-md space-y-2"
       >
         {registerErrors.map((error, i) => (
           <div className="bg-red-500 p-2 my-2 text-white" key={i}>
